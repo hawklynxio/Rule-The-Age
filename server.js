@@ -124,6 +124,42 @@ app.get('/api/map', (req, res) => {
     });
 });
 
+
+// MVP: Clan Creation
+app.post('/api/clan', (req, res) => {
+    const { userId, clanName } = req.body;
+    db.get('SELECT ancient_coins, clan_id FROM users WHERE id = ?', [userId], (err, user) => {
+        if (err || !user) return res.status(404).json({error: 'User not found'});
+        if (user.clan_id) return res.status(400).json({error: 'Already in a clan'});
+        if (user.ancient_coins < 50) return res.status(400).json({error: 'Not enough Ancient Coins (50 required)'});
+
+        db.run('INSERT INTO clans (name, leader_id) VALUES (?, ?)', [clanName, userId], function(err) {
+            if (err) return res.status(400).json({error: 'Clan name taken'});
+            const clanId = this.lastID;
+            db.run('UPDATE users SET clan_id = ?, ancient_coins = ancient_coins - 50 WHERE id = ?', [clanId, userId], () => {
+                res.json({ success: true, clanId, clanName });
+            });
+        });
+    });
+});
+
+// MVP: Store Purchase
+app.post('/api/buy', (req, res) => {
+    const { userId, item } = req.body;
+    db.get('SELECT * FROM villages WHERE user_id = ?', [userId], (err, village) => {
+        if (err || !village) return res.status(404).json({error: 'Village not found'});
+        
+        if (item === 'starter') {
+            db.run('UPDATE villages SET wood = wood + 50000, stone = stone + 50000, food = food + 50000 WHERE id = ?', [village.id], () => {
+                res.json({ success: true, message: "Starter Pack purchased! +50k Resources!" });
+            });
+        } else {
+            res.status(400).json({error: 'Invalid item'});
+        }
+    });
+});
+
 app.listen(PORT, () => {
+
   console.log(`Rule The Age server running at http://localhost:${PORT}`);
 });

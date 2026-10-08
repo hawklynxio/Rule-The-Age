@@ -172,6 +172,12 @@ function updateUI(data) {
     resFood.innerText = formatNumber(data.village.food);
     resCoins.innerText = formatNumber(data.user.ancient_coins);
 
+    if(data.user.clan_id) {
+        if(document.getElementById('clan-none')) document.getElementById('clan-none').style.display = 'none';
+        if(document.getElementById('clan-active')) document.getElementById('clan-active').style.display = 'block';
+    }
+
+
     if(document.getElementById('lvl-lumber')) document.getElementById('lvl-lumber').innerText = data.village.lumber_level || 1;
     if(document.getElementById('lvl-stone')) document.getElementById('lvl-stone').innerText = data.village.stone_level || 1;
     if(document.getElementById('lvl-food')) document.getElementById('lvl-food').innerText = data.village.food_level || 1;
@@ -289,3 +295,43 @@ document.getElementById('view-camp').addEventListener('click', async (e) => {
         alert(err.message);
     }
 });
+
+document.getElementById('create-clan-btn').addEventListener('click', async () => {
+    const clanName = document.getElementById('clan-name-input').value.trim();
+    if (!clanName) return alert("Enter a clan name!");
+    try {
+        const res = await fetch('/api/clan', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ userId: currentUserId, clanName })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        
+        document.getElementById('clan-none').style.display = 'none';
+        document.getElementById('clan-active').style.display = 'block';
+        document.getElementById('my-clan-name').innerText = data.clanName;
+        fetchState();
+    } catch(err) {
+        alert(err.message);
+    }
+});
+
+const buyBtn = document.getElementById('buy-starter-btn');
+if (buyBtn) {
+    buyBtn.addEventListener('click', async () => {
+        try {
+            const res = await fetch('/api/buy', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ userId: currentUserId, item: 'starter' })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            alert(data.message);
+            fetchState();
+        } catch(err) {
+            alert(err.message);
+        }
+    });
+}
