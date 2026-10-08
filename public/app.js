@@ -1,3 +1,4 @@
+let allVillages = [];
 let selectedTargetId = null;
 
 function showToast(msg) {
@@ -269,6 +270,7 @@ async function loadMap() {
     try {
         const res = await fetch('/api/map');
         const data = await res.json();
+        allVillages = data;
         const vmap = document.getElementById('visual-map');
         if(!vmap) return;
         
@@ -440,6 +442,7 @@ if (btnScout) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ targetId: selectedTargetId })
             });
+            spawnMapAnimation('scout', selectedTargetId);
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
             showToast(data.message);
@@ -459,6 +462,7 @@ if (btnRaid) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ userId: currentUserId, targetId: selectedTargetId })
             });
+            spawnMapAnimation('raid', selectedTargetId);
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
             showToast(data.message);
@@ -483,6 +487,7 @@ if (btnTrade) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ userId: currentUserId, targetId: selectedTargetId, amount })
             });
+            spawnMapAnimation('trade', selectedTargetId);
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
             showToast("🐪 " + data.message);
@@ -491,4 +496,47 @@ if (btnTrade) {
             showToast("Error: " + err.message);
         }
     });
+}
+
+
+function spawnMapAnimation(type, targetId) {
+    if (!currentUserId || !allVillages) return;
+    const myV = allVillages.find(v => v.user_id === currentUserId);
+    const tarV = allVillages.find(v => v.id === targetId);
+    if (!myV || !tarV) return;
+
+    const startX = (myV.map_x * 50) + 10;
+    const startY = (myV.map_y * 50) + 10;
+    const endX = (tarV.map_x * 50) + 10;
+    const endY = (tarV.map_y * 50) + 10;
+
+    const el = document.createElement('div');
+    el.className = 'map-anim';
+    
+    // Choose sprite based on action
+    if (type === 'scout') el.innerText = '🏇'; // Horse rider
+    else if (type === 'raid') el.innerText = '⚔️'; // Crossed swords or fighters
+    else if (type === 'trade') el.innerText = '🐪'; // Supply caravan
+
+    // Flip if moving left
+    if (endX < startX) el.classList.add('flip');
+
+    el.style.left = startX + 'px';
+    el.style.top = startY + 'px';
+    
+    document.getElementById('visual-map').appendChild(el);
+
+    // Trigger CSS transition
+    setTimeout(() => {
+        el.style.left = endX + 'px';
+        el.style.top = endY + 'px';
+    }, 50);
+
+    // Impact effect when it arrives
+    setTimeout(() => {
+        el.innerText = type === 'raid' ? '💥' : (type === 'trade' ? '📦' : '👁️');
+        el.style.transition = 'none'; // stop moving
+        el.style.transform = 'scale(1.5)';
+        setTimeout(() => el.remove(), 800); // fade out / remove
+    }, 1550);
 }

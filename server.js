@@ -129,7 +129,7 @@ app.post('/api/upgrade', (req, res) => {
 
 // Map endpoint
 app.get('/api/map', (req, res) => {
-    db.all(`SELECT v.id, v.name, v.lumber_level, v.stone_level, v.food_level, v.map_x, v.map_y, u.username, u.clan_id FROM villages v JOIN users u ON v.user_id = u.id ORDER BY v.id DESC LIMIT 50`, [], (err, rows) => {
+    db.all(`SELECT v.id, v.name, v.lumber_level, v.stone_level, v.food_level, v.map_x, v.map_y, u.username, u.clan_id, u.id as user_id FROM villages v JOIN users u ON v.user_id = u.id ORDER BY v.id DESC LIMIT 50`, [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(rows);
     });
