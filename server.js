@@ -170,6 +170,22 @@ app.post('/api/buy', (req, res) => {
     });
 });
 
+
+// Daily Free Supplies Endpoint
+app.post('/api/claim', (req, res) => {
+    const { userId } = req.body;
+    db.get('SELECT * FROM villages WHERE user_id = ?', [userId], (err, village) => {
+        if (err || !village) return res.status(404).json({error: 'Village not found'});
+        
+        // Give 1000 of each resource and 10 coins
+        db.run('UPDATE villages SET wood = wood + 1000, stone = stone + 1000, food = food + 1000 WHERE id = ?', [village.id], () => {
+            db.run('UPDATE users SET ancient_coins = ancient_coins + 10 WHERE id = ?', [userId], () => {
+                res.json({ success: true });
+            });
+        });
+    });
+});
+
 app.listen(PORT, () => {
 
   console.log(`Rule The Age server running at http://localhost:${PORT}`);

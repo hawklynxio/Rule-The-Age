@@ -402,3 +402,25 @@ document.getElementById('btn-zoom-out').addEventListener('click', () => {
     updateMapZoom();
 });
 
+
+
+const claimBtn = document.querySelector('.claim-btn');
+if (claimBtn) {
+    claimBtn.addEventListener('click', async () => {
+        try {
+            const res = await fetch('/api/claim', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ userId: currentUserId })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            
+            showToast("🚁 Supply Drop Secured! +1000 Resources & +10 Coins");
+            document.querySelector('.supply-drop-banner').style.display = 'none';
+            fetchState();
+        } catch (err) {
+            showToast("Error: " + err.message);
+        }
+    });
+}
