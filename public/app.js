@@ -268,10 +268,26 @@ async function loadMap() {
         const data = await res.json();
         const vmap = document.getElementById('visual-map');
         if(!vmap) return;
+        
         vmap.innerHTML = '';
+        
+        // Generate Terrain Engine
+        const terrainTypes = ['🌾', '🌱', '🪨', '🧱', '💀', '🪵', '🍂', '🌵'];
+        for(let i = 0; i < 200; i++) {
+            const t = document.createElement('div');
+            t.className = 'terrain-prop';
+            t.innerText = terrainTypes[Math.floor(Math.random() * terrainTypes.length)];
+            t.style.left = Math.floor(Math.random() * 950) + 'px';
+            t.style.top = Math.floor(Math.random() * 950) + 'px';
+            // Randomly rotate and flip for organic look
+            t.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg) scale(' + (Math.random() * 0.5 + 0.8) + ')';
+            vmap.appendChild(t);
+        }
+
         data.forEach(v => {
             const el = document.createElement('div');
             el.className = 'map-village';
+            el.style.zIndex = '10';
             const x = (v.map_x || Math.floor(Math.random()*20)) * 50;
             const y = (v.map_y || Math.floor(Math.random()*20)) * 50;
             el.style.left = x + 'px';
