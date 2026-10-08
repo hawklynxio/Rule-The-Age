@@ -380,3 +380,25 @@ if (buyBtn) {
         }
     });
 }
+
+
+let mapScale = 1.0;
+function updateMapZoom() {
+    const vmap = document.getElementById('visual-map');
+    const scaler = document.getElementById('visual-map-scaler');
+    if(!vmap || !scaler) return;
+    vmap.style.transform = `scale(${mapScale})`;
+    vmap.style.transformOrigin = 'top left';
+    scaler.style.width = (1000 * mapScale) + 'px';
+    scaler.style.height = (1000 * mapScale) + 'px';
+}
+
+document.getElementById('btn-zoom-in').addEventListener('click', () => {
+    mapScale = Math.min(mapScale + 0.3, 2.5);
+    updateMapZoom();
+});
+document.getElementById('btn-zoom-out').addEventListener('click', () => {
+    mapScale = Math.max(mapScale - 0.3, 0.4);
+    updateMapZoom();
+});
+
