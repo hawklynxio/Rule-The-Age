@@ -32,6 +32,15 @@ db.serialize(() => {
     )
   `);
 
+  
+  // Migration: Add map_x and map_y if they don't exist
+  db.run("ALTER TABLE villages ADD COLUMN map_x INTEGER DEFAULT 0", (err) => {
+    if(!err) console.log("Added map_x to villages.");
+  });
+  db.run("ALTER TABLE villages ADD COLUMN map_y INTEGER DEFAULT 0", (err) => {
+    if(!err) console.log("Added map_y to villages.");
+  });
+
   db.run(`
     CREATE TABLE IF NOT EXISTS villages (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
