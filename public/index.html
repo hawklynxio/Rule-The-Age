@@ -118,9 +118,9 @@
                     </div>
                 </div>
 
-                <div id="map-target-info" style="margin-top: 15px; padding: 15px; background: #222; border: 1px solid #444; border-radius: 8px; display: none;">
-                    <h3 id="mt-name">Select a target on the map</h3>
-                    <p id="mt-leader" style="color:#aaa; font-size:0.9rem;"></p>
+                <div id="map-target-info" style="margin-top: 15px; padding: 15px; background: #e8dcb8; border: 2px solid #8e6c4a; border-radius: 4px; display: none;">
+                    <h3 id="mt-name" style="color:#a92a18;">Select a target on the map</h3>
+                    <p id="mt-leader" style="color:#5a4434; font-size:0.9rem; font-weight:bold;"></p>
                     <div style="display:flex; gap:10px; margin-top:10px;">
                         <button id="btn-scout" class="action-btn primary-btn" style="flex:1;">Scout</button>
                         <button id="btn-raid" class="action-btn" style="flex:1; background:#c0392b; color:#fff; border-color:#8f1f10;">Raid</button>
@@ -151,12 +151,12 @@
                 <h2 data-i18n="clan_title">Clans</h2>
                 <p data-i18n="clan_desc">Join a clan to share resources.</p>
                 <div id="clan-none" class="clan-actions" style="margin-top: 15px;">
-                    <input type="text" id="clan-name-input" placeholder="Enter Clan Name" style="width:100%; padding:10px; margin-bottom:10px; background:#111; border:1px solid #333; color:#fff; border-radius:5px;">
+                    <input type="text" id="clan-name-input" placeholder="Enter Clan Name" style="width:100%; padding:10px; margin-bottom:10px; background:#fff; border:1px solid #8e6c4a; color:#333; border-radius:2px;">
                     <button id="create-clan-btn" class="action-btn secondary-btn">Found Clan (Cost: 50 🪙)</button>
                 </div>
-                <div id="clan-active" style="display:none; margin-top: 20px; padding: 15px; background: #2a2a2a; border-radius: 8px;">
+                <div id="clan-active" style="display:none; margin-top: 20px; padding: 15px; background: #e8dcb8; border: 2px solid #8e6c4a; border-radius: 4px;">
                     <h3 id="my-clan-name" style="color: #27ae60;">Your Clan</h3>
-                    <p style="color: #aaa; margin-top: 5px;">You are now part of a clan! Check the Map to see your allies.</p>
+                    <p style="color: #5a4434; margin-top: 5px; font-weight:bold;">You are now part of a clan! Check the Map to see your allies.</p>
                 </div>
             </section>
 
@@ -167,9 +167,9 @@
                 <div class="building-card" style="margin-top:20px;">
                     <div class="b-info">
                         <h3 data-i18n="language_label">Language</h3>
-                        <p data-i18n="language_desc">Select your preferred game language.</p>
+                        <p data-i18n="language_desc" style="color:#5a4434; font-size:0.9rem; margin-bottom:10px;">Select your preferred game language.</p>
                     </div>
-                    <select class="language-select" style="padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 5px;">
+                    <select class="language-select" style="padding: 10px; background: #fff; color: #333; border: 1px solid #8e6c4a; border-radius: 2px;">
                         <option value="en">English</option>
                         <option value="es">Español</option>
                         <option value="fr">Français</option>
@@ -198,6 +198,6 @@
 
     </div>
 
-    <script src="app.js?v=15"></script>
+    <script src="app.js?v=16"></script>
 </body>
 </html>
