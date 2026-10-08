@@ -68,6 +68,62 @@ app.get('/api/state/:userId', (req, res) => {
   });
 });
 
+// Upgrade building
+app.post('/api/upgrade', (req, res) => {
+    const { userId, building } = req.body;
+    db.get(`SELECT * FROM villages WHERE user_id = ?`, [userId], (err, village) => {
+        if (err || !village) return res.status(404).json({ error: 'Village not found' });
+        
+        // Sync resources first
+        const v = resourceEngine.calculateResources(village);
+        
+        let costWood = 0, costStone = 0, costFood = 0;
+        let nextLevel = 0;
+        let levelColumn = '';
+
+        if (building === 'lumber') {
+            nextLevel = (v.lumber_level || 1) + 1;
+            levelColumn = 'lumber_level';
+            costWood = 500 * nextLevel; costStone = 200 * nextLevel;
+        } else if (building === 'stone') {
+            nextLevel = (v.stone_level || 1) + 1;
+            levelColumn = 'stone_level';
+            costWood = 200 * nextLevel; costStone = 500 * nextLevel;
+        } else if (building === 'food') {
+            nextLevel = (v.food_level || 1) + 1;
+            levelColumn = 'food_level';
+            costWood = 400 * nextLevel; costStone = 400 * nextLevel;
+        } else {
+            return res.status(400).json({ error: 'Invalid building' });
+        }
+
+        if (v.wood < costWood || v.stone < costStone || v.food < costFood) {
+            return res.status(400).json({ error: 'Not enough resources' });
+        }
+
+        // Deduct and upgrade
+        v.wood -= costWood;
+        v.stone -= costStone;
+        v.food -= costFood;
+
+        db.run(`UPDATE villages SET wood = ?, stone = ?, food = ?, ${levelColumn} = ?, last_update = ? WHERE id = ?`,
+            [v.wood, v.stone, v.food, nextLevel, v.last_update, v.id],
+            function(err) {
+                if (err) return res.status(500).json({ error: err.message });
+                res.json({ message: 'Upgrade successful', level: nextLevel, wood: v.wood, stone: v.stone, food: v.food });
+            }
+        );
+    });
+});
+
+// Map endpoint
+app.get('/api/map', (req, res) => {
+    db.all(`SELECT v.id, v.name, v.lumber_level, v.stone_level, v.food_level, u.username, u.clan_id FROM villages v JOIN users u ON v.user_id = u.id ORDER BY v.id DESC LIMIT 50`, [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`Rule The Age server running at http://localhost:${PORT}`);
 });

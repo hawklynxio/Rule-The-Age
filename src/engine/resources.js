@@ -11,9 +11,9 @@ function calculateResources(village) {
 
     const hoursPassed = elapsedMs / (1000 * 60 * 60);
 
-    const newWood = village.wood + (BASE_WOOD_PH * hoursPassed);
-    const newStone = village.stone + (BASE_STONE_PH * hoursPassed);
-    const newFood = village.food + (BASE_FOOD_PH * hoursPassed);
+    const newWood = village.wood + (BASE_WOOD_PH * (village.lumber_level || 1) * hoursPassed);
+    const newStone = village.stone + (BASE_STONE_PH * (village.stone_level || 1) * hoursPassed);
+    const newFood = village.food + (BASE_FOOD_PH * (village.food_level || 1) * hoursPassed);
 
     return {
         ...village,

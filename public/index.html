@@ -64,24 +64,32 @@
                     <div class="building-card">
                         <div class="b-info">
                             <h3 data-i18n="bldg_lumber">Lumber Camp</h3>
-                            <p data-i18n="bldg_lumber_desc">Produces 🪵 Wood. Lvl 1</p>
+                            <p><span data-i18n="bldg_lumber_desc">Produces 🪵 Wood. Lvl</span> <span id="lvl-lumber">1</span></p>
                         </div>
-                        <button class="upgrade-btn"><span data-i18n="upgrade_btn">Upgrade</span><br><small>500 🪵 200 🪨</small></button>
+                        <button class="upgrade-btn" data-building="lumber"><span data-i18n="upgrade_btn">Upgrade</span><br><small id="cost-lumber">500 🪵 200 🪨</small></button>
                     </div>
                     <div class="building-card">
                         <div class="b-info">
                             <h3 data-i18n="bldg_stone">Scavenger Hut</h3>
-                            <p data-i18n="bldg_stone_desc">Produces 🪨 Stone. Lvl 1</p>
+                            <p><span data-i18n="bldg_stone_desc">Produces 🪨 Stone. Lvl</span> <span id="lvl-stone">1</span></p>
                         </div>
-                        <button class="upgrade-btn"><span data-i18n="upgrade_btn">Upgrade</span><br><small>200 🪵 500 🪨</small></button>
+                        <button class="upgrade-btn" data-building="stone"><span data-i18n="upgrade_btn">Upgrade</span><br><small id="cost-stone">200 🪵 500 🪨</small></button>
                     </div>
                     <div class="building-card">
                         <div class="b-info">
                             <h3 data-i18n="bldg_food">Hunting Lodge</h3>
-                            <p data-i18n="bldg_food_desc">Produces 🍖 Food. Lvl 1</p>
+                            <p><span data-i18n="bldg_food_desc">Produces 🍖 Food. Lvl</span> <span id="lvl-food">1</span></p>
                         </div>
-                        <button class="upgrade-btn"><span data-i18n="upgrade_btn">Upgrade</span><br><small>400 🪵 400 🪨</small></button>
+                        <button class="upgrade-btn" data-building="food"><span data-i18n="upgrade_btn">Upgrade</span><br><small id="cost-food">400 🪵 400 🪨</small></button>
                     </div>
+                </div>
+            </section>
+
+            <!-- Map View -->
+            <section id="view-map" class="view">
+                <h2 data-i18n="nav_map">Map</h2>
+                <div id="map-list">
+                    <p style="text-align:center; color:#aaa;">Loading wasteland...</p>
                 </div>
             </section>
 
@@ -133,6 +141,7 @@
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <button class="nav-btn active" data-target="view-camp">⛺<br><span data-i18n="nav_camp">Camp</span></button>
+            <button class="nav-btn" data-target="view-map">🗺️<br><span data-i18n="nav_map">Map</span></button>
             <button class="nav-btn" data-target="view-store">🛒<br><span data-i18n="nav_store">Store</span></button>
             <button class="nav-btn" data-target="view-clan">🛡️<br><span data-i18n="nav_clan">Clan</span></button>
             <button class="nav-btn" data-target="view-settings">⚙️<br><span data-i18n="nav_settings">Settings</span></button>
