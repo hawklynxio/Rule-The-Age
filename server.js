@@ -27,8 +27,8 @@ app.post('/api/login', (req, res) => {
         const userId = this.lastID;
         
         const now = Date.now();
-        db.run(`INSERT INTO villages (user_id, name, wood, stone, food, last_update) VALUES (?, ?, ?, ?, ?, ?)`, 
-          [userId, `${username}'s Encampment`, 1500, 1500, 3000, now], function(err) {
+        db.run(`INSERT INTO villages (user_id, name, wood, stone, food, last_update, map_x, map_y) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, 
+          [userId, `${username}'s Encampment`, 1500, 1500, 3000, now, Math.floor(Math.random()*20), Math.floor(Math.random()*20)], function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json({ id: userId, username, ancient_coins: 100, message: 'New settlement founded' });
         });
@@ -118,7 +118,7 @@ app.post('/api/upgrade', (req, res) => {
 
 // Map endpoint
 app.get('/api/map', (req, res) => {
-    db.all(`SELECT v.id, v.name, v.lumber_level, v.stone_level, v.food_level, u.username, u.clan_id FROM villages v JOIN users u ON v.user_id = u.id ORDER BY v.id DESC LIMIT 50`, [], (err, rows) => {
+    db.all(`SELECT v.id, v.name, v.lumber_level, v.stone_level, v.food_level, v.map_x, v.map_y, u.username, u.clan_id FROM villages v JOIN users u ON v.user_id = u.id ORDER BY v.id DESC LIMIT 50`, [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(rows);
     });

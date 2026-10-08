@@ -101,3 +101,20 @@ body {
     cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 .nav-btn.active { color: #f39c12; font-weight: bold; }
+
+/* Game Feel Enhancements */
+.action-btn, .upgrade-btn, .buy-btn, .nav-btn { transition: transform 0.1s, filter 0.1s; }
+.action-btn:active, .upgrade-btn:active, .buy-btn:active { transform: scale(0.95); filter: brightness(1.2); }
+
+#toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; pointer-events: none; }
+.toast { background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 20px; margin-bottom: 10px; border: 1px solid #f39c12; animation: fadeUp 2s forwards; font-weight: bold; }
+@keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 10% { opacity: 1; transform: translateY(0); } 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
+
+/* Visual Map */
+#visual-map-wrapper { width: 100%; height: 350px; overflow: auto; border: 2px solid #444; border-radius: 8px; background: #2c3e50; position: relative; scroll-behavior: smooth; }
+#visual-map { width: 1000px; height: 1000px; background-image: radial-gradient(#34495e 1px, transparent 1px); background-size: 50px 50px; position: relative; }
+.map-village { position: absolute; width: 50px; height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; }
+.map-village:hover { transform: scale(1.2); z-index: 10; }
+.map-v-icon { font-size: 24px; filter: drop-shadow(2px 4px 6px black); }
+.map-v-name { font-size: 10px; background: rgba(0,0,0,0.7); padding: 2px 4px; border-radius: 4px; white-space: nowrap; pointer-events: none;}
+.map-v-clan { font-size: 9px; color: #f39c12; font-weight: bold; margin-bottom:-4px; }

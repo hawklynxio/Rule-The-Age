@@ -1,3 +1,13 @@
+
+function showToast(msg) {
+    const container = document.getElementById('toast-container');
+    if(!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerText = msg;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+}
 let currentUserId = null;
 let gameLoopInterval = null;
 
@@ -228,7 +238,7 @@ loginBtn.addEventListener('click', async () => {
         gameLoopInterval = setInterval(fetchState, 5000);
 
     } catch (err) {
-        alert("Login failed: " + err.message);
+        showToast("Login failed: " + err.message);
         loginBtn.innerText = translations[currentLang].login_btn;
     }
 });
@@ -251,30 +261,49 @@ document.querySelector('.bottom-nav').addEventListener('click', (e) => {
 // Initialize default language
 setLanguage('en');
 
+
 async function loadMap() {
     try {
         const res = await fetch('/api/map');
         const data = await res.json();
-        const mapList = document.getElementById('map-list');
-        if(!mapList) return;
-        mapList.innerHTML = '';
+        const vmap = document.getElementById('visual-map');
+        if(!vmap) return;
+        vmap.innerHTML = '';
         data.forEach(v => {
+            const el = document.createElement('div');
+            el.className = 'map-village';
+            const x = (v.map_x || Math.floor(Math.random()*20)) * 50;
+            const y = (v.map_y || Math.floor(Math.random()*20)) * 50;
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            
             const score = (v.lumber_level||1) + (v.stone_level||1) + (v.food_level||1);
-            mapList.innerHTML += `
-                <div class="building-card">
-                    <div class="b-info">
-                        <h3>${v.name}</h3>
-                        <p>Leader: ${v.username} | Clan: ${v.clan_id ? v.clan_id : 'None'}</p>
-                        <p style="font-size:0.75rem; color:#888;">Tech Score: ${score}</p>
-                    </div>
-                    <button class="action-btn secondary-btn" style="width:auto; padding:5px 15px;">Scout</button>
-                </div>
+            let icon = '⛺';
+            if(score > 10) icon = '🏚️';
+            if(score > 20) icon = '🏰';
+            
+            el.innerHTML = `
+                ${v.clan_id ? '<span class="map-v-clan">['+v.clan_id+']</span>' : ''}
+                <span class="map-v-icon">${icon}</span>
+                <span class="map-v-name">${v.username}</span>
             `;
+            
+            el.onclick = () => {
+                document.getElementById('map-target-info').style.display = 'block';
+                document.getElementById('mt-name').innerText = v.name;
+                document.getElementById('mt-leader').innerText = 'Warlord: ' + v.username + ' | Tech: ' + score;
+            };
+            vmap.appendChild(el);
         });
+        
+        // Scroll map to center
+        document.getElementById('visual-map-wrapper').scrollTop = 325;
+        document.getElementById('visual-map-wrapper').scrollLeft = 325;
     } catch(err) {
         console.error(err);
     }
 }
+
 
 document.getElementById('view-camp').addEventListener('click', async (e) => {
     const btn = e.target.closest('.upgrade-btn');
@@ -292,13 +321,13 @@ document.getElementById('view-camp').addEventListener('click', async (e) => {
         if (!res.ok) throw new Error(data.error);
         fetchState(); // refresh UI immediately
     } catch (err) {
-        alert(err.message);
+        showToast(err.message);
     }
 });
 
 document.getElementById('create-clan-btn').addEventListener('click', async () => {
     const clanName = document.getElementById('clan-name-input').value.trim();
-    if (!clanName) return alert("Enter a clan name!");
+    if (!clanName) return showToast("Enter a clan name!");
     try {
         const res = await fetch('/api/clan', {
             method: 'POST',
@@ -313,7 +342,7 @@ document.getElementById('create-clan-btn').addEventListener('click', async () =>
         document.getElementById('my-clan-name').innerText = data.clanName;
         fetchState();
     } catch(err) {
-        alert(err.message);
+        showToast(err.message);
     }
 });
 
@@ -328,10 +357,10 @@ if (buyBtn) {
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
-            alert(data.message);
+            showToast(data.message);
             fetchState();
         } catch(err) {
-            alert(err.message);
+            showToast(err.message);
         }
     });
 }

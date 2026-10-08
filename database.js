@@ -43,6 +43,8 @@ db.serialize(() => {
       lumber_level INTEGER DEFAULT 1,
       stone_level INTEGER DEFAULT 1,
       food_level INTEGER DEFAULT 1,
+      map_x INTEGER DEFAULT 0,
+      map_y INTEGER DEFAULT 0,
       last_update INTEGER,
       FOREIGN KEY (user_id) REFERENCES users (id)
     )
