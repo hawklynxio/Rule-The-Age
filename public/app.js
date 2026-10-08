@@ -1,3 +1,4 @@
+let selectedTargetId = null;
 
 function showToast(msg) {
     const container = document.getElementById('toast-container');
@@ -314,6 +315,7 @@ async function loadMap() {
             el.onclick = () => {
                 document.getElementById('map-target-info').style.display = 'block';
                 document.getElementById('mt-name').innerText = v.name;
+                selectedTargetId = v.id;
                 document.getElementById('mt-leader').innerText = 'Warlord: ' + v.username + ' | Tech: ' + score;
             };
             vmap.appendChild(el);
@@ -427,6 +429,46 @@ if (claimBtn) {
             document.querySelector('.supply-drop-banner').style.display = 'none';
             fetchState();
         } catch (err) {
+            showToast("Error: " + err.message);
+        }
+    });
+}
+
+
+const btnScout = document.getElementById('btn-scout');
+if (btnScout) {
+    btnScout.addEventListener('click', async () => {
+        if (!selectedTargetId) return showToast('No target selected!');
+        try {
+            const res = await fetch('/api/scout', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ targetId: selectedTargetId })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            showToast(data.message);
+        } catch(err) {
+            showToast("Error: " + err.message);
+        }
+    });
+}
+
+const btnRaid = document.getElementById('btn-raid');
+if (btnRaid) {
+    btnRaid.addEventListener('click', async () => {
+        if (!selectedTargetId) return showToast('No target selected!');
+        try {
+            const res = await fetch('/api/raid', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ userId: currentUserId, targetId: selectedTargetId })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            showToast(data.message);
+            fetchState(); // refresh resources instantly
+        } catch(err) {
             showToast("Error: " + err.message);
         }
     });

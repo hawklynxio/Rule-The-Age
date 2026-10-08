@@ -186,6 +186,43 @@ app.post('/api/claim', (req, res) => {
     });
 });
 
+
+// Scout Endpoint
+app.post('/api/scout', (req, res) => {
+    const { targetId } = req.body;
+    db.get('SELECT * FROM villages WHERE id = ?', [targetId], (err, target) => {
+        if (err || !target) return res.status(404).json({error: 'Target not found'});
+        res.json({ message: `Scout Report for ${target.name}: ${Math.floor(target.wood)} 🪵, ${Math.floor(target.stone)} 🪨, ${Math.floor(target.food)} 🍖` });
+    });
+});
+
+// Raid Endpoint
+app.post('/api/raid', (req, res) => {
+    const { userId, targetId } = req.body;
+    db.get('SELECT * FROM villages WHERE user_id = ?', [userId], (err, attacker) => {
+        if (err || !attacker) return res.status(404).json({error: 'Attacker not found'});
+        db.get('SELECT * FROM villages WHERE id = ?', [targetId], (err, defender) => {
+            if (err || !defender) return res.status(404).json({error: 'Target not found'});
+            if (attacker.id === defender.id) return res.status(400).json({error: 'You cannot raid your own village!'});
+
+            // Steal 20% of defender's resources
+            const stolenWood = Math.floor(defender.wood * 0.2);
+            const stolenStone = Math.floor(defender.stone * 0.2);
+            const stolenFood = Math.floor(defender.food * 0.2);
+
+            if (stolenWood <= 0 && stolenStone <= 0 && stolenFood <= 0) {
+                return res.json({ message: `Raid failed! ${defender.name} has no resources left to steal!` });
+            }
+
+            db.run('UPDATE villages SET wood = wood - ?, stone = stone - ?, food = food - ? WHERE id = ?', [stolenWood, stolenStone, stolenFood, defender.id], () => {
+                db.run('UPDATE villages SET wood = wood + ?, stone = stone + ?, food = food + ? WHERE id = ?', [stolenWood, stolenStone, stolenFood, attacker.id], () => {
+                    res.json({ message: `Raid Victory! Looted ${stolenWood} 🪵, ${stolenStone} 🪨, ${stolenFood} 🍖!` });
+                });
+            });
+        });
+    });
+});
+
 app.listen(PORT, () => {
 
   console.log(`Rule The Age server running at http://localhost:${PORT}`);
