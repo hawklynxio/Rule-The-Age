@@ -1,9 +1,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #1a1a1a;
-    color: #e0e0e0;
-    overflow: hidden; /* App-like feel */
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4ecd8; /* Parchment background */
+    color: #4a3424; /* Dark brown text */
+    overflow: hidden; 
 }
 
 /* Screens */
@@ -13,94 +13,97 @@ body {
 /* Login */
 .login-container {
     margin: auto; padding: 2rem; text-align: center; max-width: 400px;
-    background: #2a2a2a; border-radius: 10px; border: 1px solid #444;
+    background: #e8dcb8; border-radius: 4px; border: 2px solid #8e6c4a;
 }
-.login-container h1 { color: #f39c12; margin-bottom: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;}
-.login-container p { margin-bottom: 2rem; color: #aaa; font-size: 0.9rem;}
+.login-container h1 { color: #a92a18; margin-bottom: 1rem; font-weight: bold; text-shadow: 1px 1px 0px #fff; text-transform: uppercase;}
+.login-container p { margin-bottom: 2rem; color: #5a4434; font-size: 0.9rem;}
 .login-container input {
-    width: 100%; padding: 12px; margin-bottom: 1rem; border: none; border-radius: 5px;
-    background: #111; color: #fff; font-size: 1rem;
+    width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid #bba580; border-radius: 2px;
+    background: #fff; color: #333; font-size: 1rem;
 }
 
 /* Buttons */
 .action-btn {
-    width: 100%; padding: 12px; border: none; border-radius: 5px; cursor: pointer;
-    font-size: 1rem; font-weight: bold; text-transform: uppercase;
+    width: 100%; padding: 10px; border: 1px solid #4a3424; border-radius: 3px; cursor: pointer;
+    font-size: 1rem; font-weight: bold; 
+    background: linear-gradient(to bottom, #9b7653, #6b4c31); color: #fff; text-shadow: 1px 1px 1px #000;
 }
-.primary-btn { background: #f39c12; color: #111; }
-.primary-btn:active { background: #d68910; }
-.secondary-btn { background: #444; color: #fff; margin-top: 10px;}
+.action-btn:active { background: linear-gradient(to bottom, #6b4c31, #4a3424); }
+.secondary-btn { background: linear-gradient(to bottom, #7a6855, #4d4033); }
 
 /* Resource Bar */
 .resource-bar {
-    display: flex; justify-content: space-between; background: #000; padding: 10px 5px;
-    border-bottom: 2px solid #333; z-index: 10;
+    display: flex; justify-content: space-between; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=') repeat; /* Wood texture mock */
+    background-color: #2c1e16; padding: 6px 4px; border-bottom: 2px solid #111; z-index: 10; color: #fff;
 }
 .resource {
-    display: flex; align-items: center; background: #222; border-radius: 20px;
-    padding: 2px 8px 2px 2px; font-size: 0.85rem; font-weight: bold;
+    display: flex; align-items: center; background: rgba(0,0,0,0.4); border-radius: 2px; border: 1px solid #555;
+    padding: 2px 6px 2px 2px; font-size: 0.8rem; font-weight: bold;
 }
-.resource .icon { margin-right: 5px; font-size: 1.1rem; }
-.resource.premium { background: linear-gradient(90deg, #b8860b, #daa520); color: #000; padding-right: 2px;}
-.add-coins-btn {
-    background: #fff; color: #000; border: none; border-radius: 50%;
-    width: 20px; height: 20px; margin-left: 5px; font-weight: bold; cursor: pointer;
-}
+.resource .icon { margin-right: 3px; font-size: 1rem; }
+.add-coins-btn { display:none; } /* Hide the plus button for cleaner UI */
 
 /* Main Content */
 #content-area {
-    flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 70px;
+    flex: 1; overflow-y: auto; padding: 0; padding-bottom: 70px;
 }
 .view { display: none; }
 .view.active { display: block; }
-.view h2 { margin-bottom: 15px; color: #f39c12; border-bottom: 1px solid #444; padding-bottom: 5px;}
+
+/* Red Banners (Like thumbnails) */
+.view h2 { 
+    margin: 0; padding: 12px; text-align: center; color: #fff; font-size: 1.2rem;
+    background: linear-gradient(to bottom, #c6331c, #8f1f10); border-bottom: 2px solid #ffd700;
+    text-shadow: 1px 1px 2px #000; text-transform: uppercase; letter-spacing: 1px;
+}
+.section-header {
+    background: #d4c39f; border-bottom: 1px solid #a38b66; border-top: 1px solid #a38b66;
+    padding: 5px 10px; font-size: 0.9rem; font-weight: bold; color: #fff; text-shadow: 1px 1px 1px #5a4434;
+}
 
 /* Supply Banner */
 .supply-drop-banner {
-    background: linear-gradient(45deg, #1e8449, #27ae60); color: #fff;
-    padding: 15px; border-radius: 8px; display: flex; justify-content: space-between;
-    align-items: center; margin-bottom: 20px; font-weight: bold;
+    background: #4ca64c; color: #fff; border-bottom: 2px solid #2e7a2e;
+    padding: 10px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;
 }
-.claim-btn { background: #fff; color: #1e8449; border: none; padding: 5px 15px; border-radius: 15px; font-weight: bold; cursor: pointer;}
+.claim-btn { background: #fff; color: #2e7a2e; border: 1px solid #1c4a1c; padding: 5px 15px; border-radius: 3px; font-weight: bold; cursor: pointer;}
 
-/* Building Cards */
+/* Building Cards (Construction options) */
+.buildings-list { padding: 10px; }
 .building-card {
-    background: #2a2a2a; border: 1px solid #444; border-radius: 8px;
-    padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between;
-    align-items: center;
+    background: transparent; border-bottom: 1px solid #d4c39f;
+    padding: 10px 0; display: flex; justify-content: space-between; align-items: center;
 }
-.b-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
-.b-info p { font-size: 0.8rem; color: #aaa; }
+.b-info { display: flex; align-items: center; gap: 10px; }
+.b-icon { width: 50px; height: 50px; background: #cbbba1; border: 1px solid #8e6c4a; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: inset 0 0 5px rgba(0,0,0,0.2);}
+.b-details h3 { font-size: 1rem; color: #4a3424; margin-bottom: 3px; display: flex; align-items: center; gap: 5px;}
+.level-badge { 
+    background: #4ca64c; color: #fff; font-size: 0.75rem; padding: 2px 5px; 
+    border: 1px solid #1c4a1c; border-radius: 2px; font-weight: bold; text-shadow: 1px 1px 0px #000;
+}
+.b-costs { font-size: 0.75rem; color: #6a4c34; display: flex; gap: 8px; align-items: center;}
 .upgrade-btn {
-    background: #2980b9; color: #fff; border: none; padding: 8px 12px; border-radius: 5px;
-    font-weight: bold; cursor: pointer; text-align: center;
+    background: linear-gradient(to bottom, #9b7653, #6b4c31); color: #fff; border: 1px solid #4a3424; 
+    padding: 8px 12px; border-radius: 3px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-shadow: 1px 1px 0px #000;
 }
-.upgrade-btn small { display: block; font-weight: normal; font-size: 0.7rem; margin-top: 3px; }
 
-/* Store Items */
-.store-item {
-    background: #2a2a2a; border: 1px solid #444; border-radius: 8px;
-    padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
-}
-.store-item.hot { border: 2px solid #e74c3c; background: #3a1c1c; }
-.s-info h3 { font-size: 1.0rem; margin-bottom: 5px; }
-.s-info p { font-size: 0.8rem; color: #ccc; }
-.buy-btn {
-    background: #27ae60; color: #fff; border: none; padding: 10px 15px;
-    border-radius: 5px; font-weight: bold; cursor: pointer;
-}
-.buy-btn.premium-cost { background: #f1c40f; color: #000; }
+/* Store & Clan Items */
+.store-item { background: #e8dcb8; border: 1px solid #bba580; padding: 10px; margin: 10px; }
+.buy-btn { background: linear-gradient(to bottom, #4ca64c, #2e7a2e); color: #fff; border: 1px solid #1c4a1c; padding: 8px 12px; border-radius: 3px; font-weight: bold; cursor: pointer; text-shadow: 1px 1px 0px #000;}
 
-/* Bottom Navigation */
+/* Bottom Navigation (Like thumbnails) */
 .bottom-nav {
-    display: flex; justify-content: space-around; background: #111;
-    border-top: 1px solid #333; position: fixed; bottom: 0; width: 100%; height: 60px;
+    display: flex; justify-content: space-around; background: #1a1a1a;
+    border-top: 1px solid #000; position: fixed; bottom: 0; width: 100%; height: 60px; z-index: 100;
 }
 .nav-btn {
-    flex: 1; background: none; border: none; color: #888; font-size: 0.8rem;
-    cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    flex: 1; background: none; border: none; color: #777; font-size: 0.7rem;
+    cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
 }
-.nav-btn.active { color: #f39c12; font-weight: bold; }
+.nav-btn i { font-size: 1.4rem; filter: grayscale(100%); opacity: 0.6; }
+.nav-btn.active { color: #fff; }
+.nav-btn.active i { filter: grayscale(0%); opacity: 1; }
+
 
 /* Game Feel Enhancements */
 .action-btn, .upgrade-btn, .buy-btn, .nav-btn { transition: transform 0.1s, filter 0.1s; }
