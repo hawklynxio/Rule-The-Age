@@ -215,17 +215,18 @@ loginBtn.addEventListener('click', async () => {
     }
 });
 
-navBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const targetId = btn.getAttribute('data-target');
-        if(!targetId) return; 
+document.querySelector('.bottom-nav').addEventListener('click', (e) => {
+    const btn = e.target.closest('.nav-btn');
+    if (!btn) return;
+    
+    const targetId = btn.getAttribute('data-target');
+    if (!targetId) return; 
 
-        navBtns.forEach(b => b.classList.remove('active'));
-        views.forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
 
-        btn.classList.add('active');
-        document.getElementById(targetId).classList.add('active');
-    });
+    btn.classList.add('active');
+    document.getElementById(targetId).classList.add('active');
 });
 
 // Initialize default language
