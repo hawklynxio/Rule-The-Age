@@ -223,6 +223,33 @@ app.post('/api/raid', (req, res) => {
     });
 });
 
+
+// Trade Endpoint
+app.post('/api/trade', (req, res) => {
+    const { userId, targetId, amount } = req.body; // sending equal amount of all 3
+    const amt = parseInt(amount);
+    if (isNaN(amt) || amt <= 0) return res.status(400).json({error: 'Invalid amount'});
+
+    db.get('SELECT * FROM villages WHERE user_id = ?', [userId], (err, sender) => {
+        if (err || !sender) return res.status(404).json({error: 'Sender not found'});
+        if (sender.wood < amt || sender.stone < amt || sender.food < amt) {
+            return res.status(400).json({error: 'Not enough resources to send this trade!'});
+        }
+        
+        db.get('SELECT * FROM villages WHERE id = ?', [targetId], (err, receiver) => {
+            if (err || !receiver) return res.status(404).json({error: 'Receiver not found'});
+            if (sender.id === receiver.id) return res.status(400).json({error: 'Cannot trade with yourself!'});
+
+            // Execute trade
+            db.run('UPDATE villages SET wood = wood - ?, stone = stone - ?, food = food - ? WHERE id = ?', [amt, amt, amt, sender.id], () => {
+                db.run('UPDATE villages SET wood = wood + ?, stone = stone + ?, food = food + ? WHERE id = ?', [amt, amt, amt, receiver.id], () => {
+                    res.json({ message: `Caravan arrived! Sent ${amt} of each resource to ${receiver.name}.` });
+                });
+            });
+        });
+    });
+});
+
 app.listen(PORT, () => {
 
   console.log(`Rule The Age server running at http://localhost:${PORT}`);

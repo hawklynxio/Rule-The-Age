@@ -473,3 +473,27 @@ if (btnRaid) {
         }
     });
 }
+
+
+const btnTrade = document.getElementById('btn-trade');
+if (btnTrade) {
+    btnTrade.addEventListener('click', async () => {
+        if (!selectedTargetId) return showToast('No target selected!');
+        const amount = prompt("How many of EACH resource (Wood, Stone, Food) do you want to send?");
+        if (!amount || isNaN(amount) || amount <= 0) return;
+        
+        try {
+            const res = await fetch('/api/trade', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ userId: currentUserId, targetId: selectedTargetId, amount })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            showToast("🐪 " + data.message);
+            fetchState(); // refresh resources instantly
+        } catch(err) {
+            showToast("Error: " + err.message);
+        }
+    });
+}
