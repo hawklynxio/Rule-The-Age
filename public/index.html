@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rule The Age</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <h1>RULE THE AGE</h1>
+            <p>The apocalypse has passed. Rebuild from the ashes with swords, arrows, and scavenged tech.</p>
+            <input type="text" id="username-input" placeholder="Enter Warlord Name">
+            <button id="login-btn" class="action-btn primary-btn">Enter the Wasteland</button>
+        </div>
+    </div>
+
+    <!-- Main Game Interface -->
+    <div id="game-screen" class="screen">
+        
+        <!-- Top Resource Bar -->
+        <header class="resource-bar">
+            <div class="resource" title="Wood">
+                <span class="icon">🪵</span> <span id="res-wood">0</span>
+            </div>
+            <div class="resource" title="Stone">
+                <span class="icon">🪨</span> <span id="res-stone">0</span>
+            </div>
+            <div class="resource" title="Food">
+                <span class="icon">🍖</span> <span id="res-food">0</span>
+            </div>
+            <div class="resource premium" title="Ancient Coins">
+                <span class="icon">🪙</span> <span id="res-coins">0</span>
+                <button class="add-coins-btn">+</button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="content-area">
+            
+            <!-- Camp View -->
+            <section id="view-camp" class="view active">
+                <h2 id="village-name">Your Encampment</h2>
+                <div class="supply-drop-banner">
+                    🎁 <span>Daily Free Supplies Available!</span> <button class="claim-btn">Claim</button>
+                </div>
+                
+                <div class="buildings-list">
+                    <div class="building-card">
+                        <div class="b-info">
+                            <h3>Lumber Camp</h3>
+                            <p>Produces 🪵 Wood. Lvl 1</p>
+                        </div>
+                        <button class="upgrade-btn">Upgrade<br><small>500 🪵 200 🪨</small></button>
+                    </div>
+                    <div class="building-card">
+                        <div class="b-info">
+                            <h3>Scavenger Hut</h3>
+                            <p>Produces 🪨 Stone. Lvl 1</p>
+                        </div>
+                        <button class="upgrade-btn">Upgrade<br><small>200 🪵 500 🪨</small></button>
+                    </div>
+                    <div class="building-card">
+                        <div class="b-info">
+                            <h3>Hunting Lodge</h3>
+                            <p>Produces 🍖 Food. Lvl 1</p>
+                        </div>
+                        <button class="upgrade-btn">Upgrade<br><small>400 🪵 400 🪨</small></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Store View (Upsells) -->
+            <section id="view-store" class="view">
+                <h2>The Scavenger's Market</h2>
+                
+                <div class="store-item hot">
+                    <div class="s-info">
+                        <h3>🔥 Starter Warlord Pack</h3>
+                        <p>+50,000 all resources, +500 Ancient Coins, 1x Relic Sword</p>
+                    </div>
+                    <button class="buy-btn">$4.99</button>
+                </div>
+
+                <div class="store-item">
+                    <div class="s-info">
+                        <h3>Tech Blueprint: Crossbows</h3>
+                        <p>Unlock advanced ranged tech. Skips 5 days of research.</p>
+                    </div>
+                    <button class="buy-btn premium-cost">250 🪙</button>
+                </div>
+                
+                <div class="store-item">
+                    <div class="s-info">
+                        <h3>24h Resource Boost</h3>
+                        <p>Double all resource production for 24 hours.</p>
+                    </div>
+                    <button class="buy-btn premium-cost">100 🪙</button>
+                </div>
+            </section>
+
+            <!-- Clan View -->
+            <section id="view-clan" class="view">
+                <h2>Clans</h2>
+                <p>Join a clan to share resources and coordinate attacks.</p>
+                <div class="clan-actions">
+                    <button class="action-btn primary-btn">Find a Clan</button>
+                    <button class="action-btn secondary-btn">Found a Clan (50 🪙)</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-target="view-camp">⛺<br>Camp</button>
+            <button class="nav-btn" data-target="view-store">🛒<br>Store</button>
+            <button class="nav-btn" data-target="view-clan">🛡️<br>Clan</button>
+            <button class="nav-btn">🗺️<br>Map</button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
