@@ -9,7 +9,18 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Force no-cache for mobile rapid iteration
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('Surrogate-Control', 'no-store');
+    next();
+});
+
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: 0 }));
+
 
 // Simple Auth / User retrieval
 app.post('/api/login', (req, res) => {
