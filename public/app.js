@@ -194,18 +194,13 @@ function updateUI(data) {
     if(document.getElementById('lvl-food')) document.getElementById('lvl-food').innerText = data.village.food_level || 1;
     
     const lumberNext = (data.village.lumber_level || 1) + 1;
-    
-    const lumberNext = (data.village.lumber_level || 1) + 1;
     if(document.getElementById('cost-lumber')) document.getElementById('cost-lumber').innerHTML = `<span>🪵 ${500 * lumberNext}</span> <span>🪨 ${200 * lumberNext}</span> <span>⏱️ 0:02:30</span>`;
     const stoneNext = (data.village.stone_level || 1) + 1;
     if(document.getElementById('cost-stone')) document.getElementById('cost-stone').innerHTML = `<span>🪵 ${200 * stoneNext}</span> <span>🪨 ${500 * stoneNext}</span> <span>⏱️ 0:03:15</span>`;
     const foodNext = (data.village.food_level || 1) + 1;
     if(document.getElementById('cost-food')) document.getElementById('cost-food').innerHTML = `<span>🪵 ${400 * foodNext}</span> <span>🪨 ${400 * foodNext}</span> <span>⏱️ 0:04:00</span>`;
 
-    const stoneNext = (data.village.stone_level || 1) + 1;
-    if(document.getElementById('cost-stone')) document.getElementById('cost-stone').innerText = `${200 * stoneNext} 🪵 ${500 * stoneNext} 🪨`;
-    const foodNext = (data.village.food_level || 1) + 1;
-    if(document.getElementById('cost-food')) document.getElementById('cost-food').innerText = `${400 * foodNext} 🪵 ${400 * foodNext} 🪨`;
+    
 
 }
 
