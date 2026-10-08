@@ -11,10 +11,10 @@
     <!-- Login Screen -->
     <div id="login-screen" class="screen active">
         <div class="login-container">
-            <h1>RULE THE AGE</h1>
-            <p>The apocalypse has passed. Rebuild from the ashes with swords, arrows, and scavenged tech.</p>
-            <input type="text" id="username-input" placeholder="Enter Warlord Name">
-            <button id="login-btn" class="action-btn primary-btn">Enter the Wasteland</button>
+            <h1 data-i18n="login_title">RULE THE AGE</h1>
+            <p data-i18n="login_desc">The apocalypse has passed. Rebuild from the ashes with swords, arrows, and scavenged tech.</p>
+            <input type="text" id="username-input" data-i18n-ph="login_ph" placeholder="Enter Warlord Name">
+            <button id="login-btn" class="action-btn primary-btn" data-i18n="login_btn">Enter the Wasteland</button>
         </div>
     </div>
 
@@ -45,80 +45,78 @@
             <section id="view-camp" class="view active">
                 <h2 id="village-name">Your Encampment</h2>
                 <div class="supply-drop-banner">
-                    🎁 <span>Daily Free Supplies Available!</span> <button class="claim-btn">Claim</button>
+                    🎁 <span data-i18n="supply_banner">Daily Free Supplies Available!</span> <button class="claim-btn" data-i18n="claim_btn">Claim</button>
                 </div>
                 
                 <div class="buildings-list">
                     <div class="building-card">
                         <div class="b-info">
-                            <h3>Lumber Camp</h3>
-                            <p>Produces 🪵 Wood. Lvl 1</p>
+                            <h3 data-i18n="bldg_lumber">Lumber Camp</h3>
+                            <p data-i18n="bldg_lumber_desc">Produces 🪵 Wood. Lvl 1</p>
                         </div>
-                        <button class="upgrade-btn">Upgrade<br><small>500 🪵 200 🪨</small></button>
+                        <button class="upgrade-btn"><span data-i18n="upgrade_btn">Upgrade</span><br><small>500 🪵 200 🪨</small></button>
                     </div>
                     <div class="building-card">
                         <div class="b-info">
-                            <h3>Scavenger Hut</h3>
-                            <p>Produces 🪨 Stone. Lvl 1</p>
+                            <h3 data-i18n="bldg_stone">Scavenger Hut</h3>
+                            <p data-i18n="bldg_stone_desc">Produces 🪨 Stone. Lvl 1</p>
                         </div>
-                        <button class="upgrade-btn">Upgrade<br><small>200 🪵 500 🪨</small></button>
+                        <button class="upgrade-btn"><span data-i18n="upgrade_btn">Upgrade</span><br><small>200 🪵 500 🪨</small></button>
                     </div>
                     <div class="building-card">
                         <div class="b-info">
-                            <h3>Hunting Lodge</h3>
-                            <p>Produces 🍖 Food. Lvl 1</p>
+                            <h3 data-i18n="bldg_food">Hunting Lodge</h3>
+                            <p data-i18n="bldg_food_desc">Produces 🍖 Food. Lvl 1</p>
                         </div>
-                        <button class="upgrade-btn">Upgrade<br><small>400 🪵 400 🪨</small></button>
+                        <button class="upgrade-btn"><span data-i18n="upgrade_btn">Upgrade</span><br><small>400 🪵 400 🪨</small></button>
                     </div>
                 </div>
             </section>
 
-            <!-- Store View (Upsells) -->
+            <!-- Store View -->
             <section id="view-store" class="view">
-                <h2>The Scavenger's Market</h2>
-                
+                <h2 data-i18n="store_title">The Scavenger's Market</h2>
                 <div class="store-item hot">
                     <div class="s-info">
-                        <h3>🔥 Starter Warlord Pack</h3>
-                        <p>+50,000 all resources, +500 Ancient Coins, 1x Relic Sword</p>
+                        <h3 data-i18n="store_item1">🔥 Starter Warlord Pack</h3>
+                        <p data-i18n="store_item1_desc">+50k resources, +500 Coins</p>
                     </div>
                     <button class="buy-btn">$4.99</button>
-                </div>
-
-                <div class="store-item">
-                    <div class="s-info">
-                        <h3>Tech Blueprint: Crossbows</h3>
-                        <p>Unlock advanced ranged tech. Skips 5 days of research.</p>
-                    </div>
-                    <button class="buy-btn premium-cost">250 🪙</button>
-                </div>
-                
-                <div class="store-item">
-                    <div class="s-info">
-                        <h3>24h Resource Boost</h3>
-                        <p>Double all resource production for 24 hours.</p>
-                    </div>
-                    <button class="buy-btn premium-cost">100 🪙</button>
                 </div>
             </section>
 
             <!-- Clan View -->
             <section id="view-clan" class="view">
-                <h2>Clans</h2>
-                <p>Join a clan to share resources and coordinate attacks.</p>
+                <h2 data-i18n="clan_title">Clans</h2>
+                <p data-i18n="clan_desc">Join a clan to share resources.</p>
                 <div class="clan-actions">
-                    <button class="action-btn primary-btn">Find a Clan</button>
-                    <button class="action-btn secondary-btn">Found a Clan (50 🪙)</button>
+                    <button class="action-btn primary-btn" data-i18n="clan_find">Find a Clan</button>
+                </div>
+            </section>
+
+            <!-- Settings View -->
+            <section id="view-settings" class="view">
+                <h2 data-i18n="settings_title">Settings</h2>
+                <div class="building-card" style="margin-top:20px;">
+                    <div class="b-info">
+                        <h3 data-i18n="language_label">Language</h3>
+                        <p data-i18n="language_desc">Select your preferred game language.</p>
+                    </div>
+                    <select id="language-select" style="padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 5px;">
+                        <option value="en">English</option>
+                        <option value="tr">Türkçe</option>
+                        <option value="es">Español</option>
+                    </select>
                 </div>
             </section>
         </main>
 
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
-            <button class="nav-btn active" data-target="view-camp">⛺<br>Camp</button>
-            <button class="nav-btn" data-target="view-store">🛒<br>Store</button>
-            <button class="nav-btn" data-target="view-clan">🛡️<br>Clan</button>
-            <button class="nav-btn">🗺️<br>Map</button>
+            <button class="nav-btn active" data-target="view-camp">⛺<br><span data-i18n="nav_camp">Camp</span></button>
+            <button class="nav-btn" data-target="view-store">🛒<br><span data-i18n="nav_store">Store</span></button>
+            <button class="nav-btn" data-target="view-clan">🛡️<br><span data-i18n="nav_clan">Clan</span></button>
+            <button class="nav-btn" data-target="view-settings">⚙️<br><span data-i18n="nav_settings">Settings</span></button>
         </nav>
     </div>
 
