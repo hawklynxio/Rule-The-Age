@@ -538,5 +538,5 @@ function spawnMapAnimation(type, targetId) {
         el.style.transition = 'none'; // stop moving
         el.style.transform = 'scale(1.5)';
         setTimeout(() => el.remove(), 800); // fade out / remove
-    }, 1550);
+    }, 2050);
 }
