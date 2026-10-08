@@ -49,6 +49,31 @@ db.serialize(() => {
       FOREIGN KEY (user_id) REFERENCES users (id)
     )
   `);
+
+    // Seed dummy villages for MVP testing
+    db.get('SELECT COUNT(*) as count FROM users', (err, row) => {
+      if (row && row.count === 0) {
+          console.log("Seeding dummy villages...");
+          const dummies = [
+              { name: "Bandit Camp", wood: 5000, stone: 2000, food: 1000, x: 3, y: 4, lvl: 2 },
+              { name: "Barbarian Outpost", wood: 10000, stone: 8000, food: 5000, x: 14, y: 16, lvl: 5 },
+              { name: "Abandoned Fortress", wood: 45000, stone: 50000, food: 20000, x: 18, y: 2, lvl: 12 },
+              { name: "Goblin Horde", wood: 2000, stone: 1000, food: 25000, x: 6, y: 17, lvl: 3 },
+              { name: "Ruined Citadel", wood: 100000, stone: 100000, food: 50000, x: 9, y: 10, lvl: 20 }
+          ];
+          
+          const now = Date.now();
+          dummies.forEach(d => {
+              db.run('INSERT INTO users (username, ancient_coins) VALUES (?, ?)', [d.name, 0], function(err) {
+                  if (!err) {
+                      const userId = this.lastID;
+                      db.run('INSERT INTO villages (user_id, name, wood, stone, food, last_update, map_x, map_y, lumber_level, stone_level, food_level) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                      [userId, d.name, d.wood, d.stone, d.food, now, d.x, d.y, d.lvl, d.lvl, d.lvl]);
+                  }
+              });
+          });
+      }
+    });
 });
 
 module.exports = db;
