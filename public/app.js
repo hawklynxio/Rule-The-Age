@@ -140,10 +140,15 @@ const gameScreen = document.getElementById('game-screen');
 const usernameInput = document.getElementById('username-input');
 const loginBtn = document.getElementById('login-btn');
 const villageNameLabel = document.getElementById('village-name');
-const langSelect = document.getElementById('language-select');
+const langSelects = document.querySelectorAll('.language-select');
 
-langSelect.addEventListener('change', (e) => {
-    setLanguage(e.target.value);
+langSelects.forEach(select => {
+    select.addEventListener('change', (e) => {
+        const newLang = e.target.value;
+        // Keep all dropdowns in sync
+        langSelects.forEach(s => s.value = newLang);
+        setLanguage(newLang);
+    });
 });
 
 // Resource UI
