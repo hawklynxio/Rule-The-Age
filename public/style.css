@@ -110,7 +110,7 @@ body {
 .action-btn:active, .upgrade-btn:active, .buy-btn:active { transform: scale(0.95); filter: brightness(1.2); }
 
 #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; pointer-events: none; }
-.toast { background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 20px; margin-bottom: 10px; border: 1px solid #f39c12; animation: fadeUp 2s forwards; font-weight: bold; }
+.toast { background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 20px; margin-bottom: 10px; border: 1px solid #f39c12; animation: fadeUp 4s forwards; font-weight: bold; }
 @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 10% { opacity: 1; transform: translateY(0); } 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
 
 /* Visual Map */

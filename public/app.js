@@ -7,7 +7,7 @@ function showToast(msg) {
     toast.className = 'toast';
     toast.innerText = msg;
     container.appendChild(toast);
-    setTimeout(() => toast.remove(), 2000);
+    setTimeout(() => toast.remove(), 4000);
 }
 let currentUserId = null;
 let gameLoopInterval = null;
